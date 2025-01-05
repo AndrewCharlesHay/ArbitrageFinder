@@ -98,7 +98,13 @@ def process_data(matches: Iterable, include_started_matches: bool = True) -> Gen
 
 def get_arbitrage_opportunities(key: str, region: str, cutoff: float):
     sports = get_sports(key)
-    data = chain.from_iterable(get_data(key, sport, region=region) for sport in sports)
+    data = []
+    iteration = 0
+    for sport in sports:
+        if iteration >= 1000:
+            break
+        data.extend(get_data(key, sport, region=region))
+        iteration += 1
     data = filter(lambda x: x != "message", data)
     results = process_data(data)
     arbitrage_opportunities = filter(lambda x: 0 < x["total_implied_odds"] < 1-cutoff, results)
