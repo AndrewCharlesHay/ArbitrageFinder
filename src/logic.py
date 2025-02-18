@@ -99,9 +99,9 @@ def process_data(matches: Iterable, include_started_matches: bool = True) -> Gen
 def get_arbitrage_opportunities(key: str, region: str, cutoff: float):
     sports = get_sports(key)
     data = []
-    iteration = 0
+    iteration = 80
     for sport in sports:
-        if iteration >= 1000:
+        if iteration >= 100:
             break
         data.extend(get_data(key, sport, region=region))
         iteration += 1
